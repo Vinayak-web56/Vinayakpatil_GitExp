@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <limits.h>
+#include <time.h>
+#define N 4
+#define INF 9999
+int costMatrix[N][N] = {
+    {0, 10, 15, 20},
+    {10, 0, 35, 25},
+    {15, 35, 0, 30},
+    {20, 25, 30, 0}
+};
+int dp[1 << N][N];  
+int visitedAll = (1 << N) - 1;
+// ---------- Exact TSP using DP + Bitmask ----------
+int tspExact(int mask, int pos) {
+    if (mask == visitedAll)
+        return costMatrix[pos][0];  
+    if (dp[mask][pos] != -1)
+        return dp[mask][pos];
+    int ans = INF;
+    for (int city = 0; city < N; city++) {
+        if ((mask & (1 << city)) == 0) {  
+            int newAns = costMatrix[pos][city] + tspExact(mask | (1 << city), city);
+            if (newAns < ans)
+                ans = newAns;
+        }
+    }
+    dp[mask][pos] = ans;
+    return ans;
+}
+// ---------- Approximate TSP using Nearest Neighbor ----------
+int tspApprox() {
+    bool visited[N] = {false};
+    int totalCost = 0;
+    int current = 0;  
+    visited[0] = true;
+    printf("\nNearest Neighbor Path: 0");
+    for (int count = 1; count < N; count++) {
+        int nearest = -1;
+        int minDist = INF;
+        for (int j = 0; j < N; j++) {
+            if (!visited[j] && costMatrix[current][j] < minDist && costMatrix[current][j] != 0) {
+                minDist = costMatrix[current][j];
+                nearest = j;
+            }
+        }
+        visited[nearest] = true;
+        totalCost += minDist;
+        current = nearest;
+        printf(" -> %d", current);
+    }
+    totalCost += costMatrix[current][0]; 
+    printf(" -> 0\n");
+    return totalCost;
+}
+// ---------- MAIN FUNCTION ----------
+int main() {
+    int i, j;
+    clock_t start, end;
+    double exactTime, approxTime;
+    // Initialize DP array
+    for (i = 0; i < (1 << N); i++)
+        for (j = 0; j < N; j++)
+            dp[i][j] = -1;
+    printf("Traveling Salesperson Problem (TSP) Comparison\n");
+    printf("----------------------------------------------\n");
+    // ---------- Exact Solution ----------
+    start = clock();
+    int exactCost = tspExact(1, 0);
+    end = clock();
+    exactTime = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Exact TSP Cost = %d\n", exactCost);
+    printf("Exact TSP Execution Time = %.10f seconds\n", exactTime);
+    // ---------- Approximate Solution ----------
+    start = clock();
+    int approxCost = tspApprox();
+    end = clock();
+    approxTime = ((double)(end - start)) / CLOCKS_PER_SEC;
+    double errorPercent = ((double)(approxCost - exactCost) / exactCost) * 100.0;
+    printf("\nApproximate TSP Cost = %d\n", approxCost);
+    printf("Approximate TSP Execution Time = %.10f seconds\n", approxTime);
+    printf("Approximation Error = %.2f%%\n", errorPercent);
+    printf("\nTime Complexity:\n");
+    printf("Exact (DP + Bitmask) = O(n^2 * 2^n)\n");
+    printf("Approximate (Nearest Neighbor) = O(n^2)\n");
+    printf("\nSpace Complexity:\n");
+    printf("Exact = O(n * 2^n), Approximate = O(n)\n");
+    printf("\n-----------------------------------\n");
+    printf("Name : Vinayak Patil\n");
+    printf("PRN  : 22458010261\n");
+    return 0;
+}

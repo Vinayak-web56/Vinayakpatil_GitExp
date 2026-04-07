@@ -1,0 +1,25 @@
+# Import required libraries  
+from pgmpy.models import DiscreteBayesianNetwork  
+from pgmpy.factors.discrete import TabularCPD  
+from pgmpy.inference import VariableElimination  
+# Step 1: Define the network structure  
+model = DiscreteBayesianNetwork([('Smoking', 'Disease'), ('Pollution', 'Disease')])  
+# Step 2: Define CPDs  
+cpd_smoking = TabularCPD('Smoking', 2, [[0.7], [0.3]])  
+cpd_pollution = TabularCPD('Pollution', 2, [[0.6], [0.4]])  
+cpd_disease = TabularCPD( 
+'Disease', 2, 
+[[0.9, 0.7, 0.8, 0.1], 
+[0.1, 0.3, 0.2, 0.9]], 
+evidence=['Smoking', 'Pollution'], 
+evidence_card=[2, 2] 
+) 
+# Step 3: Add CPDs 
+model.add_cpds(cpd_smoking, cpd_pollution, cpd_disease) 
+# Step 4: Check model 
+print("Model valid:", model.check_model()) 
+# Step 5: Inference 
+inference = VariableElimination(model) 
+result = inference.query(variables=['Disease'],  
+evidence={'Smoking': 1, 'Pollution': 1}) 
+# Step 6: Show result

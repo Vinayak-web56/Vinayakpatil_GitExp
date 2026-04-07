@@ -1,0 +1,44 @@
+import numpy as np  
+# Sigmoid activation function  
+def sigmoid(x):  
+    return 1 / (1 + np.exp(-x))  
+# Derivative of sigmoid  
+def sigmoid_derivative(x):  
+    return x * (1 - x)  
+# Input and output data (XOR)  
+X = np.array([[0, 0],  
+              [0, 1],  
+              [1, 0],  
+              [1, 1]])  
+y = np.array([[0],  
+              [1],  
+              [1],  
+              [0]])  
+# Initialize weights and biases  
+np.random.seed(42)  
+weights_input_hidden = np.random.uniform(-1, 1, (2, 2))  
+weights_hidden_output = np.random.uniform(-1, 1, (2, 1))  
+bias_hidden = np.zeros((1, 2))  
+bias_output = np.zeros((1, 1))  
+# Learning rate  
+lr = 0.5  
+# Training loop  
+for epoch in range(10000):  
+    # Forward propagation  
+    hidden_layer_input = np.dot(X, weights_input_hidden) + bias_hidden  
+    hidden_layer_output = sigmoid(hidden_layer_input)  
+    final_input = np.dot(hidden_layer_output, weights_hidden_output) + bias_output  
+    output = sigmoid(final_input)  
+    # Error calculation  
+    error = y - output  
+    # Backpropagation  
+    d_output = error * sigmoid_derivative(output)  
+    d_hidden = d_output.dot(weights_hidden_output.T) * sigmoid_derivative(hidden_layer_output)  
+    # Update weights and biases  
+    weights_hidden_output += hidden_layer_output.T.dot(d_output) * lr  
+    weights_input_hidden += X.T.dot(d_hidden) * lr  
+    bias_output += np.sum(d_output, axis=0, keepdims=True) * lr  
+    bias_hidden += np.sum(d_hidden, axis=0, keepdims=True) * lr  
+# Testing the network  
+print("Final Output after Training:")  
+print(np.round(output))

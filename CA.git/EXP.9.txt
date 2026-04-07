@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <time.h>
+
+#define MAX 10
+#define INF 99999
+
+int n; // number of vertices
+
+// Function to print distance matrix
+void printSolution(int dist[MAX][MAX], int n) {
+    printf("\nShortest distances between every pair of vertices:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (dist[i][j] == INF)
+                printf("%7s", "INF");
+            else
+                printf("%7d", dist[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+// Floyd–Warshall Algorithm
+void floydWarshall(int graph[MAX][MAX]) {
+    int dist[MAX][MAX];
+
+    // Initialize distance matrix
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            dist[i][j] = graph[i][j];
+
+    // Update distances using intermediate vertices
+    for (int k = 0; k < n; k++)
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                if (dist[i][k] + dist[k][j] < dist[i][j])
+                    dist[i][j] = dist[i][k] + dist[k][j];
+
+    printSolution(dist, n);
+}
+
+int main() {
+    int graph[MAX][MAX];
+    clock_t start, end;
+    double cpu_time_used;
+
+    printf("Enter number of vertices (max %d): ", MAX);
+    scanf("%d", &n);
+    if (n <= 0 || n > MAX) {
+        printf("Invalid number of vertices.\n");
+        return 1;
+    }
+
+    printf("Enter adjacency matrix (use %d for INF / no edge):\n", INF);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%d", &graph[i][j]);
+
+    start = clock();
+    floydWarshall(graph);
+    end = clock();
+
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("\nExecution Time: %.10f seconds\n", cpu_time_used);
+
+    printf("\nTime Complexity: O(n^3)\n");
+    printf("Space Complexity: O(n^2)\n");
+
+    printf("\n-----------------------------------\n");
+    printf("Name : Vinayak Patil\n");
+    printf("PRN  : 22458010261\n");
+
+    return 0;
+}

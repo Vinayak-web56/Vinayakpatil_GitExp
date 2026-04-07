@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <time.h>
+#define MAX 10
+int adj[MAX][MAX], visited[MAX], n;
+// ---------- BFS Function ----------
+void bfs(int start) {
+    int queue[MAX], front = 0, rear = 0;
+    visited[start] = 1;
+    queue[rear++] = start;
+    printf("BFS Traversal: ");
+    while (front < rear) {
+        int node = queue[front++];
+        printf("%d ", node);
+        for (int i = 0; i < n; i++) {
+            if (adj[node][i] && !visited[i]) {
+                queue[rear++] = i;
+                visited[i] = 1;
+            }
+        }
+    }
+    printf("\n");
+}
+// ---------- DFS Function ----------
+void dfs(int start) {
+    printf("%d ", start);
+    visited[start] = 1;
+    for (int i = 0; i < n; i++) {
+        if (adj[start][i] && !visited[i]) {
+            dfs(i);
+        }
+    }
+}
+int main() {
+    int i, j, start;
+    clock_t start_time, end_time;
+    double bfs_time, dfs_time;
+    printf("Enter number of vertices (max %d): ", MAX);
+    scanf("%d", &n);
+    if (n <= 0 || n > MAX) {
+        printf("Invalid number of vertices.\n");
+        return 1;
+    }
+    printf("Enter adjacency matrix (%d x %d):\n", n, n);
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            scanf("%d", &adj[i][j]);
+        }
+    }
+    printf("Enter starting vertex (0 to %d): ", n - 1);
+    scanf("%d", &start);
+    if (start < 0 || start >= n) {
+        printf("Invalid starting vertex.\n");
+        return 1;
+    }
+    // ---------- BFS ----------
+    for (i = 0; i < n; i++) visited[i] = 0;
+    start_time = clock();
+    bfs(start);
+    end_time = clock();
+    bfs_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+    printf("BFS Execution Time: %.10f seconds\n", bfs_time);
+    // ---------- DFS ----------
+    for (i = 0; i < n; i++) visited[i] = 0;
+    printf("DFS Traversal: ");
+    start_time = clock();
+    dfs(start);
+    end_time = clock();
+    printf("\n");
+    dfs_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+    printf("DFS Execution Time: %.10f seconds\n", dfs_time);
+    printf("\nTime Complexity: BFS & DFS = O(V + E)\n");
+    printf("Space Complexity: BFS = O(V), DFS = O(V) (recursion stack)\n");
+    printf("\n-----------------------------------\n");
+    printf("Name : Vinayak Patil\n");
+    printf("PRN  : 22458010261\n");
+    return 0;
+}

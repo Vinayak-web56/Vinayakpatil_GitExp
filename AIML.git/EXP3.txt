@@ -1,0 +1,37 @@
+import itertools  
+def is_tautology(expression):  
+""" 
+Checks if a given propositional logic expression is a tautology. 
+Variables must be lowercase letters (e.g., 'p', 'q'). 
+Supported operators: and, or, not, == (iff), != (xor) 
+""" 
+# 1. Identify unique variables 
+variables = sorted(list(set(c for c in expression if 'a' <= c <= 'z')))  
+if not variables:  
+# If no variables, evaluate directly 
+return bool(eval(expression))  
+# 2. Generate all truth assignments 
+num_vars = len(variables)  
+truth_assignments = list(itertools.product([True, False], repeat=num_vars))  
+results = []  
+# 3. Evaluate expression for each assignment 
+for assignment in truth_assignments:  
+env = dict(zip(variables, assignment))  
+try:  
+result = eval(expression, {}, env)  
+results.append(result)  
+except Exception as e:  
+print(f"Error evaluating '{expression}': {e}")  
+return False  
+# 4. Check if all results are True 
+return all(results)  
+# --- Test Cases --- 
+if __name__ == "__main__":  
+expr1 = "(p or not p)"  
+print(f"Is '{expr1}' a tautology? {is_tautology(expr1)}")  
+expr2 = "(p and not p)"  
+print(f"Is '{expr2}' a tautology? {is_tautology(expr2)}")  
+expr3 = "((p or q) and not p) <= q"  # implies 
+print(f"Is '{expr3}' a tautology? {is_tautology(expr3)}")    
+expr4 = "(not p or q) or (not q or p)"  
+print(f"Is '{expr4}' a tautology? {is_tautology(expr4)}") 
