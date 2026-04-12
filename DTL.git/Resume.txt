@@ -1,0 +1,111 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[left=0.9in,right=0.9in,top=0.8in,bottom=0.8in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\linespread{1.08}
+\setlist[itemize]{noitemsep, topsep=5pt}
+\pagenumbering{gobble}
+
+\begin{document}
+
+\begin{center}
+{\Huge \textbf{VINAYAK PATIL}}\\[6pt]
+
+Email: patilvinayak5656@gmail.com | Phone: +91-8208266854\\[4pt]
+
+LinkedIn: \href{https://linkedin.com/in/patilvinayak}{linkedin.com/in/patilvinayak}
+\end{center}
+
+\vspace{8pt}
+
+\textbf{Career Objective}
+\rule{\textwidth}{0.7pt}
+
+\vspace{5pt}
+
+Aspiring software engineer eager to apply technical knowledge and learn new technologies while contributing to a dynamic and growth-oriented organization.
+
+\vspace{10pt}
+
+\textbf{Education}
+\rule{\textwidth}{0.7pt}
+
+\vspace{5pt}
+
+\begin{itemize}[leftmargin=20pt]
+
+\item \textbf{Bachelor of Computer Science}  
+JSPM University Pune (2024–2028)
+
+\item \textbf{Higher Secondary Certificate (HSC)}  
+Sou. Surekha Kalyanshetti Akkalkot (2022–2024) – 78\%
+
+\item \textbf{Secondary School Certificate (SSC)}  
+Mangrule High School Akkalkot (2015–2022) – 93\%
+
+\end{itemize}
+
+\vspace{10pt}
+
+\textbf{Technical Skills}
+\rule{\textwidth}{0.7pt}
+
+\vspace{5pt}
+
+\begin{itemize}[leftmargin=20pt]
+
+\item Programming: C, C++, Python
+\item Web Technologies: HTML, CSS, JavaScript
+\item Tools: VS Code, Git, MATLAB, LaTeX, Overleaf
+\item Operating Systems: Windows, Linux
+
+\end{itemize}
+
+\vspace{10pt}
+
+\textbf{Projects}
+\rule{\textwidth}{0.7pt}
+
+\vspace{5pt}
+
+\begin{itemize}[leftmargin=20pt]
+
+\item \textbf{Cricket Chatbot} (Python, CustomTkinter)  
+
+Developed a GUI chatbot providing Indian cricket and IPL information with user interaction and predefined response logic.
+
+\end{itemize}
+
+\vspace{10pt}
+
+\textbf{Experience}
+\rule{\textwidth}{0.7pt}
+
+\vspace{5pt}
+
+\begin{itemize}[leftmargin=20pt]
+
+\item Developed Cricket Chatbot using Python GUI
+\item Implemented K-Means clustering algorithm
+\item Completed academic mini projects
+
+\end{itemize}
+
+\vspace{10pt}
+
+\textbf{Declaration}
+\rule{\textwidth}{0.7pt}
+
+\vspace{5pt}
+
+I hereby declare that the above information is true to the best of my knowledge.
+
+\vspace{15pt}
+
+Place: \hfill Date:
+
+\vspace{25pt}
+
+\hfill (Vinayak Patil)
+
+\end{document}
