@@ -38,8 +38,5 @@ int main() {
     printf("\nTime taken by recursive binary search: %.10f seconds\n", cpu_time_used);
     printf("Theoretical Time Complexity: O(log n)\n");
     printf("Space Complexity (due to recursion stack): O(log n)\n");
-    printf("\n-----------------------------------\n");
-    printf("Name : Vinayak Patil\n");
-    printf("PRN  : 22458010261\n");
-return 0;
+    
 }
