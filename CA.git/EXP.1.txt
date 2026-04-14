@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <time.h>
-// Iterative factorial function
 long long factorial_iterative(int n) {
     long long result = 1;
     for (int i = 2; i <= n; i++) {
@@ -8,7 +7,6 @@ long long factorial_iterative(int n) {
     }
     return result;
 }
-// Recursive factorial function
 long long factorial_recursive(int n) {
     if (n <= 1)
         return 1;
@@ -21,7 +19,6 @@ int main() {
     long long result;
  printf("Enter a number to find factorial (0-20): ");
     scanf("%d", &n);
-    // Validate input
     if (n < 0) {
         printf("Factorial is not defined for negative numbers.\n");
         return 1;
@@ -29,7 +26,6 @@ int main() {
  if (n > 20) {
         printf("Warning: Result may overflow for n > 20 using long long.\n\n");
     }
-// Iterative timing
     start = clock();
     result = factorial_iterative(n);
     end = clock();
@@ -37,7 +33,6 @@ int main() {
   printf("\n[Iterative] Factorial of %d = %lld\n", n, result);
     printf("[Iterative] Time taken: %.10f seconds\n", cpu_time_used);
     printf("[Iterative] Space Complexity: O(1)\n");
- // Recursive timing
     start = clock();
     result = factorial_recursive(n);
     end = clock();
