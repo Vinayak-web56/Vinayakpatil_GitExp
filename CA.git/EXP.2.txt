@@ -1,42 +1,29 @@
-#include <stdio.h>
-#include <time.h>
-// Recursive Binary Search Function
-int binarySearch(int arr[], int left, int right, int key) {
-    if (left > right)
-        return -1;
-    int mid = left + (right - left) / 2;
-
-    if (arr[mid] == key)
-        return mid;
-    else if (key < arr[mid])
-        return binarySearch(arr, left, mid - 1, key);
+#include<stdio.h>
+int binarySearch(int arr[],int left,int right,int key){
+    if(left>right) return -1;
+    int mid =(left+right)/2 ;
+    if(arr[mid]==key)
+    return mid;
+    else if(key<arr[mid])
+    return binarySearch(arr ,left,mid-1,key);
     else
-        return binarySearch(arr, mid + 1, right, key);
+    return binarySearch(arr,mid+1,right,key);
 }
-int main() {
-    int arr[100000], n, key, result;
-    clock_t start, end;
-    double cpu_time_used;
-    printf("Enter number of elements: ");
-    scanf("%d", &n);
-    printf("Enter %d elements in sorted order:\n", n);
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
-    printf("Enter the element to search: ");
-    scanf("%d", &key);
-    // Record start time
-    start = clock();
-    result = binarySearch(arr, 0, n - 1, key);
-    // Record end time
-    end = clock();
-    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-    if (result != -1)
-        printf("\nElement %d found at position %d.\n", key, result + 1);
-    else
-        printf("\nElement %d not found in the array.\n", key);
-    printf("\nTime taken by recursive binary search: %.10f seconds\n", cpu_time_used);
-    printf("Theoretical Time Complexity: O(log n)\n");
-    printf("Space Complexity (due to recursion stack): O(log n)\n");
+int main(){
+    int arr[100],n,key,pos;
+    printf("Enter size:");
+    scanf("%d",&n);
     
+    printf("Enter the sorted elements:\n");
+    for(int i=0;i<n;i++)
+    scanf("%d",&arr[i]);
+    
+    printf("Enter the element:");
+    scanf("%d",&key);
+    
+    pos=binarySearch(arr,0,n-1,key);
+    if(pos !=-1)
+    printf("Element Found at position %d",pos+1);
+    else
+    printf("Not Found");
 }
