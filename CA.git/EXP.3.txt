@@ -1,31 +1,48 @@
 #include <stdio.h>
-#include <time.h>
-int main() {
-    int a[100], n, i, j, temp, swapped;
-    clock_t start = clock();
-    printf("Enter number of elements (max 100): ");
-    scanf("%d", &n);
-    if (n < 1 || n > 100) return 1;
-    printf("Enter elements:\n");
-    for (i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-    // Bubble Sort
-    for (i = 0; i < n - 1; i++) {
-        swapped = 0;
-        for (j = 0; j < n - i - 1; j++) {
-            if (a[j] > a[j + 1]) {
-                temp = a[j];
-                a[j] = a[j + 1];
-                a[j + 1] = temp;
-                swapped = 1;
+void bubbleSort(int arr[], int n) {
+    for(int i = 0; i < n-1; i++) {
+        for(int j = 0; j < n-i-1; j++) {
+            if(arr[j] > arr[j+1]) {
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
             }
         }
-        if (!swapped) break;
     }
-    clock_t end = clock();
-    printf("\nSorted array:\n");
-    for (i = 0; i < n; i++)
-        printf("%d ", a[i]);
-    printf("\nTime: %.6f sec\n", (double)(end - start) / CLOCKS_PER_SEC);
-    printf("Time Complexity: O(n^2), Best: O(n), Space: O(1)\n");
+}
+void insertionSort(int arr[], int n) {
+    for(int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        while(j >= 0 && arr[j] > key) {
+            arr[j+1] = arr[j];
+            j--;
+        }
+        arr[j+1] = key;
+    }
+}
+void printArray(int arr[], int n) {
+    for(int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int arr[100], n;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for(int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    bubbleSort(arr, n);
+    printf("\nBubble Sorted: ");
+    printArray(arr, n);
+    
+    insertionSort(arr, n);
+    printf("Insertion Sorted: ");
+    printArray(arr, n);
 }
