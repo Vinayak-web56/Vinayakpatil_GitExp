@@ -1,3 +1,16 @@
+Create your project folder
+mkdir Selenium_Login_Test
+cd Selenium_Login_Test
+Install Selenium WebDriver
+pip install selenium
+pip show selenium
+create python file
+notepad login_test.py
+Execute the Selenium test cases
+cd Selenium_Login_Test
+python login_test.py
+
+
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
