@@ -76,3 +76,5 @@ if __name__ == "__main__":
     valid_test = ValidLoginTest()
     valid_test.login("standard_user", "secret_sauce")
     valid_test.close()
+
+https://chatgpt.com/share/6afa8876-98c0-83ec-8031-ea83ca789a31
