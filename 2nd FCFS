@@ -1,0 +1,73 @@
+
+def show_results(title, rows, gantt):
+    print("\n" + title + " Scheduling Results")
+    print("-" * 66)
+    print("Process\tAT\tBT\tCT\tTAT\tWT")
+
+    for name, at, bt, ct, tat, wt in sorted(
+        rows, key=lambda r: int(r[0][1:])
+    ):
+        print(f"{name}\t{at}\t{bt}\t{ct}\t{tat}\t{wt}")
+
+    print("-" * 66)
+    print(f"Average Waiting Time : {sum(r[5] for r in rows) / len(rows):.2f}")
+    print(f"Average Turnaround Time : {sum(r[4] for r in rows) / len(rows):.2f}")
+
+    print("\nGantt Chart:")
+    print(" | ".join(
+        f"{name} ({start}-{end})"
+        for name, start, end in gantt
+    ))
+
+
+def fcfs(processes):
+    # First Come First Serve Scheduling
+    order = sorted(processes, key=lambda p: (p[1], int(p[0][1:])))
+
+    time = 0
+    rows = []
+    gantt = []
+
+    for name, at, bt in order:
+        if time < at:
+            gantt.append(("Idle", time, at))
+            time = at
+
+        start = time
+        time += bt
+        ct = time
+        tat = ct - at
+        wt = tat - bt
+
+        rows.append((name, at, bt, ct, tat, wt))
+        gantt.append((name, start, ct))
+
+    show_results("FCFS", rows, gantt)
+
+
+def main():
+    n = int(input("Enter number of processes (at least 4): "))
+
+    if n < 4:
+        print("Please enter at least 4 processes.")
+        return
+
+    processes = []
+
+    for i in range(n):
+        print(f"\nProcess P{i + 1}")
+
+        at = int(input("Arrival Time: "))
+        bt = int(input("Burst Time: "))
+
+        if at < 0 or bt <= 0:
+            print("Arrival time must be >= 0 and burst time must be > 0.")
+            return
+
+        processes.append((f"P{i + 1}", at, bt))
+
+    fcfs(processes)
+
+
+if __name__ == "__main__":
+    main()
