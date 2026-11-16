@@ -1,26 +1,18 @@
+ReaderWriterDemo.java file must be this name
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 public class ReaderWriterDemo {
-
     private static int sharedData = 0;
-
     private static final ReentrantReadWriteLock lock =
             new ReentrantReadWriteLock();
-
     // Reader Thread
     static class Reader implements Runnable {
-
         private final int id;
-
         Reader(int id) {
             this.id = id;
         }
-
         public void run() {
-
             lock.readLock().lock();
-
             try {
                 System.out.println(
                     "Reader " + id + " reads: " + sharedData
@@ -31,14 +23,10 @@ public class ReaderWriterDemo {
             }
         }
     }
-
     // Writer Thread
     static class Writer implements Runnable {
-
         public void run() {
-
             lock.writeLock().lock();
-
             try {
                 sharedData = 100;
 
@@ -51,25 +39,20 @@ public class ReaderWriterDemo {
             }
         }
     }
-
     public static void main(String[] args)
             throws InterruptedException {
-
         Thread r1 = new Thread(new Reader(1));
         Thread r2 = new Thread(new Reader(2));
         Thread w1 = new Thread(new Writer());
         Thread r3 = new Thread(new Reader(3));
-
         r1.start();
         r2.start();
         w1.start();
         r3.start();
-
         r1.join();
         r2.join();
         w1.join();
         r3.join();
-
         System.out.println(
             "Final shared data: " + sharedData
         );
