@@ -1,0 +1,35 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_LEDBackpack.h>
+#include <IRremote.hpp>
+
+Adafruit_7segment display;
+int number = 0;
+
+byte codes[] = {0x16,0x0C,0x18,0x5E,0x08,0x1C,0x5A,0x42,0x52,0x4A};
+
+void setup() {
+  IrReceiver.begin(11);
+  display.begin(0x70);
+  display.print(0);
+  display.writeDisplay();
+}
+
+void loop() {
+  if (IrReceiver.decode()) {
+    if (!(IrReceiver.decodedIRData.flags & IRDATA_FLAGS_IS_REPEAT)) {
+      byte c = IrReceiver.decodedIRData.command;
+
+      for (byte i = 0; i < 10; i++) {
+        if (c == codes[i]) {
+          number = number * 10 + i;
+          if (number > 9999) number = i;
+          display.print(number);
+          display.writeDisplay();
+          break;
+        }
+      }
+    }
+    IrReceiver.resume();
+  }
+}
