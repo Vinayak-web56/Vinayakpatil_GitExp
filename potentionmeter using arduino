@@ -1,0 +1,20 @@
+const int potpin=A0;
+const int ledPin=13;
+void setup()
+{
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  int potValue=analogRead(A0);
+  int delayTime=map(potValue,0,1023,100,1000);
+  digitalWrite(13, HIGH);
+  delay(delayTime); 
+  digitalWrite(13, LOW);
+  delay(delayTime); 
+  Serial.print("Potentiometer Value");
+  Serial.println(potValue);
+  delay(1000);
+}
