@@ -1,0 +1,19 @@
+int MPin =9;
+int Analog = A0;
+int Ainp = 0;
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(MPin,OUTPUT);
+  pinMode(Analog,INPUT);
+}
+
+void loop()
+{
+  Ainp = analogRead(A0);
+  
+  int Speed = map(Ainp,0,1024,0,255);
+  delay(100);
+  Serial.println(Speed);
+  analogWrite(MPin,Speed);
+}
